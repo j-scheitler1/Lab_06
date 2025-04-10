@@ -6,11 +6,23 @@ public class Payment {
 	
 	private int paid;
 	private int due;
-	private Date data;
+	private Date dueDate;
 	
 	public Payment (int paid, int due, Date data) {
 		this.paid = paid;
 		this.due = due;
-		this.data = data;
+		this.dueDate = data;
+	}
+	
+	public int getPaidAmount () {
+		return paid;
+	}
+	
+	public int getDueAmount () {
+		return due;
+	}
+	
+	public Date getdueDate() {
+		return dueDate;
 	}
 }
