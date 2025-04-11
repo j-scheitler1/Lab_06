@@ -1,5 +1,7 @@
 package ATM;
 
+//Authors: Joshua Scheitler, Ethan Mayer
+
 import java.sql.Date;
 
 public class Payment {

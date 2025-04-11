@@ -1,9 +1,17 @@
 package ATM;
 
+//Authors: Joshua Scheitler, Ethan Mayer
+
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Checkings extends Account{
 	
 	protected int withdrawlTotal;
 	protected int transferTotal;
+	
+	private List<Payment> paymentHistory;
 	
 	public Checkings () {
 		super();

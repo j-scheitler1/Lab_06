@@ -1,6 +1,17 @@
 package ATM;
 
+
+//Authors: Joshua Scheitler, Ethan Mayer
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Savings extends Account{
+	
+
+	private List<Payment> paymentHistory;
 	
 	protected int transferTotal;
 	

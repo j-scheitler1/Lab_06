@@ -1,5 +1,7 @@
 package ATM;
 
+//Authors: Joshua Scheitler, Ethan Mayer
+
 public abstract class Account {
 	
 	protected int balance;
