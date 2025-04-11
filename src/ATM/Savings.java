@@ -13,6 +13,7 @@ public class Savings extends Account{
 
 	private List<Payment> paymentHistory;
 	
+	
 	protected int transferTotal;
 	
 	public Savings() {
@@ -26,7 +27,6 @@ public class Savings extends Account{
 		balance -= amount;
 		return true;
 	}
-	
 	
 
 }

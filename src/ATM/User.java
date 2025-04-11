@@ -20,4 +20,14 @@ public class User {
 	}
 	
 	
+	public Checkings getCheckings() {
+		return checkingsAccount;
+	}
+	public Savings getSavings() {
+		return savingsAccount;
+	}
+	public UtilityAccount getUtility() {
+		return utilityAccount;
+	}
+	
 }
