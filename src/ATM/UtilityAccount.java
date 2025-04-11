@@ -45,22 +45,22 @@ public class UtilityAccount {
 	    }
 	}
 	
-	public void login(String username, String password) {
+	public void login(String username, int accountNumber, String password) {
 		try (BufferedReader reader = new BufferedReader(new FileReader("utility_users.txt"))) {
 			String line;
 			String currUsername;
 			String currPassword;
-			int currAccountNumber;
+			String currAccountNumber;
 			while ((line = reader.readLine()) != null) {
 				String[] parts = line.split(",");
 				if (parts.length == 3) {
 					currUsername = parts[0];
 					currPassword = parts[1];
-					currAccountNumber = Integer.parseInt(parts[2]);
-					if (username == currUsername && password == currPassword) {
+					currAccountNumber = parts[2];
+					if ((username == currUsername || String.valueOf(accountNumber) == currAccountNumber)&& password == currPassword) {
 						this.username = username;
 						this.password = password;
-						this.paymentHistory = getPaymentHistory(currAccountNumber);
+						this.paymentHistory = getPaymentHistory(Integer.parseInt(currAccountNumber));
 					}
 				}
 			}
@@ -90,21 +90,39 @@ public class UtilityAccount {
 		return new ArrayList<>();
 	}
 	
-	public void savePayment(Payment payment) {
-		
+	// PAYMENTS FILE STRUCTURE = AccountNumber,?Date|PaidAmount|DueAmount!, ...
+	
+	public void savePayment(int accountNumber, Payment payment) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(""))) {
+			String line;
+			String actNum = String.valueOf(accountNumber);
+			while ((line = reader.readLine()) != null) {
+				String[] parts = line.split(",");
+				if (parts[0].equals(actNum)) {
+					// FOUND ACCOUNT, NOW GET PAYMENT AND SAVE
+					String paymentWriting = paymentFormat(payment);
+				}	
+			}
+		} catch (IOException e) {
+			System.out.println("Could not find the user: " + e.getMessage());
+		}
+	}
+	
+	public String paymentFormat(Payment payment) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("!").append(payment.getdueDate()).append("|").append(payment.getPaidAmount()).append("|").append(payment.getDueAmount()).append("!");
+		return sb.toString();
 	}
 	
 	
-//	public String displayPaymentHistory () {
-//		StringBuilder sb = new StringBuilder();
-//		for (Payment p : paymentHistory) {
-//			sb.append("Due Date: ").append(p.getdueDate()).append("\n");
-//			sb.append("Paid Amount: ").append(p.getPaidAmount()).append("\n");
-//			sb.append("Due Amount: ").append(p.getDueAmount()).append("\n");
-//			sb.append("\n");
-//		}
-//		return sb.toString();
-//	}
+	public String displayPayment (Payment paymentHistory) {
+		StringBuilder sb = new StringBuilder();
+			sb.append("Due Date: ").append(paymentHistory.getdueDate()).append("\n");
+			sb.append("Paid Amount: ").append(paymentHistory.getPaidAmount()).append("\n");
+			sb.append("Due Amount: ").append(paymentHistory.getDueAmount()).append("\n");
+			sb.append("\n");
+		return sb.toString();
+	}
 	
 	
 	
