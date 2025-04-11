@@ -50,16 +50,17 @@ public class UtilityAccount {
 			String line;
 			String currUsername;
 			String currPassword;
+			int currAccountNumber;
 			while ((line = reader.readLine()) != null) {
 				String[] parts = line.split(",");
 				if (parts.length == 3) {
 					currUsername = parts[0];
 					currPassword = parts[1];
-					int currAccountNumber = Integer.parseInt(parts[2]);
+					currAccountNumber = Integer.parseInt(parts[2]);
 					if (username == currUsername && password == currPassword) {
 						this.username = username;
 						this.password = password;
-						this.paymentHistory = getPaymentHistory();
+						this.paymentHistory = getPaymentHistory(currAccountNumber);
 					}
 				}
 			}
@@ -70,8 +71,27 @@ public class UtilityAccount {
 	}
 	
 	// TODO - Make this get the payment history from the Account Number
-	public List<Payment> getPaymentHistory() {
-		return null;
+	public List<Payment> getPaymentHistory(int accountNumber) {
+		try (BufferedReader reader = new BufferedReader(new FileReader("payment_history.txt"))) {
+			String line;
+			String actNum = String.valueOf(accountNumber);
+			while ((line = reader.readLine()) != null) {
+				String[] parts = line.split(",");
+				if (parts[0].equals(actNum)) {
+					// ACCOUNT NUMBER FOUND NEED TO FETCH HISTORY
+					
+				}
+			}
+			
+		} catch (IOException e) {
+			
+		}
+		
+		return new ArrayList<>();
+	}
+	
+	public void savePayment(Payment payment) {
+		
 	}
 	
 	
