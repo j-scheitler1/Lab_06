@@ -148,9 +148,11 @@ public class ATM {
 					
 					if(savingsAccount.transfer(amount, savingsAccount, checkingsAccount)) {
 						System.out.println("Successfully transferred $" + amount + " from savings to checking");
+						System.out.println("You have $" + savingsAccount.getTransferTotal() + " daily transfer limit remaining!");
 					}
 					else {
-						System.out.println("Too much to transfer. The most you can transfer is $" + savingsAccount.getBalance());
+						System.out.println("Too much to transfer. The most you can transfer is $" + savingsAccount.getTransferTotal());
+						System.out.println("You have $" + savingsAccount.getBalance() + " in your account.");
 					}
 				}
 				if(choice ==  3) {
@@ -173,7 +175,7 @@ public class ATM {
 					//Payment history
 					List<Payment> paymentHistory;
 					
-					paymentHistory = utilityAccount.getPaymentHistory(111111);
+					paymentHistory = utilityAccount.getPaymentHistory();
 					
 					System.out.println("Payment history: ");
 					

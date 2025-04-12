@@ -18,15 +18,25 @@ public class Savings extends Account{
 	
 	public Savings() {
 		super();
-		transferTotal = 0;
+		transferTotal = 100;
 	}
 
-	public boolean transferFunds(int amount) {
-		if ((transferTotal + amount) > 100) return false;
-		transferTotal += amount;
-		balance -= amount;
+	@Override
+	public boolean transfer(double amount, Account account1, Account account2) {
+		if(amount > balance || amount > transferTotal) {
+			return false;
+		}
+		else {
+			account1.balance -= amount;
+			account2.balance += amount;
+			transferTotal -= amount;
+		}
 		return true;
 	}
 	
+	public double getTransferTotal() {
+		
+		return transferTotal;
+	}
 
 }

@@ -64,7 +64,7 @@ public class UtilityAccount {
 					if ((username == currUsername || String.valueOf(accountNumber) == currAccountNumber)&& password == currPassword) {
 						this.username = username;
 						this.password = password;
-						this.paymentHistory = getPaymentHistory(Integer.parseInt(currAccountNumber));
+						this.paymentHistory = getPaymentHistory();
 					}
 				}
 			}
@@ -74,7 +74,10 @@ public class UtilityAccount {
 		}
 	}
 	
-	public List<Payment> getPaymentHistory(int accountNumber) {
+	public List<Payment> getPaymentHistory() {
+		
+		int accountNumber = getAccountNumber();
+		
 	    List<Payment> payments = new ArrayList<>();
 	    String actNum = String.valueOf(accountNumber);
 
@@ -177,4 +180,7 @@ public class UtilityAccount {
 		return "July 4th";
 	}
 
+	public int getAccountNumber() {
+		return accountNumber;
+	}
 }
