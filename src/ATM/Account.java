@@ -8,6 +8,7 @@ public abstract class Account {
 	private double depositLimit;
 	private double withdrawLimit;
 	
+	
 	public Account () {
 		balance = 0;
 		depositLimit = 5000;
@@ -42,6 +43,17 @@ public abstract class Account {
 	}
 
 
+	public boolean transfer(double amount, Account account1, Account account2) {
+		
+		if(amount > balance) {
+			return false;
+		}
+		else {
+			account1.balance -= amount;
+			account2.balance += amount;
+		}
+		return true;
+	}
 	public double getDepositLimit() {
 		
 		return depositLimit;

@@ -125,6 +125,11 @@ public class UtilityAccount {
 	}
 	
 	
-	
+	public double getNextBillPayment() {
+		return 100.0;
+	}
+	public String getNextBillDueDate() {
+		return "July 4th";
+	}
 
 }

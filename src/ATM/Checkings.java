@@ -17,6 +17,7 @@ public class Checkings extends Account{
 		super();
 		withdrawlTotal = 0;
 		transferTotal = 0;
+		
 	}
 	
 	public void withdrawlFunds(int amount) {

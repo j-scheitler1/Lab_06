@@ -1,5 +1,7 @@
 package ATM;
 
+import java.util.List;
+
 //Authors: Joshua Scheitler, Ethan Mayer
 
 import java.util.Scanner;
@@ -62,7 +64,7 @@ public class ATM {
 					
 					double amount = scanner.nextDouble();
 					
-					if(savingsAccount.deposit(amount) ==  false) {
+					if(checkingsAccount.deposit(amount) ==  false) {
 						System.out.println("Failure to deposit. You have only $" + checkingsAccount.getDepositLimit() + " daily deposit limit remaining!");
 					}
 					else {
@@ -76,7 +78,7 @@ public class ATM {
 					
 					double amount = scanner.nextDouble();
 					
-					if(savingsAccount.withdraw(amount) ==  false) {
+					if(checkingsAccount.withdraw(amount) ==  false) {
 						System.out.println("Failure to withdraw.");
 						
 						if(amount > checkingsAccount.getBalance()) {
@@ -93,12 +95,23 @@ public class ATM {
 				}
 				if(choice ==  3) {
 					//Transfer
+					System.out.println("How much would you like to transfer?");
+					
+					double amount = scanner.nextDouble();
+					
+					if(checkingsAccount.transfer(amount, checkingsAccount, savingsAccount)) {
+						System.out.println("Successfully transferred $" + amount + " from checking to savings");
+					}
+					else {
+						System.out.println("Too much to transfer. The most you can transfer is $" + checkingsAccount.getBalance());
+					}
 				}
 				if(choice ==  4) {
 					//Pay bill
 				}
 				if(choice ==  5) {
 					//Check balance
+					System.out.println("Checking account balance: $" + checkingsAccount.getBalance());
 				}
 				if(choice ==  6) {
 					//Back
@@ -115,12 +128,34 @@ public class ATM {
 				
 				if(choice ==  1) {
 					//Deposit
+					System.out.println("How much would you like to deposit?");
+					
+					double amount = scanner.nextDouble();
+					
+					if(savingsAccount.deposit(amount) ==  false) {
+						System.out.println("Failure to deposit. You have only $" + savingsAccount.getDepositLimit() + " daily deposit limit remaining!");
+					}
+					else {
+						System.out.println("Successfully deposited $" + amount);
+						System.out.println("You have $" + savingsAccount.getDepositLimit() + " daily deposit limit remaining!");
+					}
 				}
 				if(choice ==  2) {
 					//Transfer
+					System.out.println("How much would you like to transfer?");
+					
+					double amount = scanner.nextDouble();
+					
+					if(savingsAccount.transfer(amount, savingsAccount, checkingsAccount)) {
+						System.out.println("Successfully transferred $" + amount + " from savings to checking");
+					}
+					else {
+						System.out.println("Too much to transfer. The most you can transfer is $" + savingsAccount.getBalance());
+					}
 				}
 				if(choice ==  3) {
 					//Check balance
+					System.out.println("Savings account balance: $" + savingsAccount.getBalance());
 				}
 				if(choice ==  4) {
 					//Back
@@ -136,9 +171,20 @@ public class ATM {
 				
 				if(choice ==  1) {
 					//Payment history
+					List<Payment> paymentHistory;
+					
+					paymentHistory = utilityAccount.getPaymentHistory(111111);
+					
+					System.out.println("Payment history: ");
+					
+					for(int i=0; i<paymentHistory.size(); i++) {
+						System.out.println(paymentHistory.get(i));
+					}
 				}
 				if(choice ==  2) {
 					//Next bill payment
+					System.out.println("Next bill payment: $" + utilityAccount.getNextBillPayment());
+					System.out.println("Due date: " + utilityAccount.getNextBillDueDate());
 				}
 				if(choice ==  3) {
 					//Back
