@@ -55,7 +55,6 @@ public abstract class Account {
 		return true;
 	}
 	public double getDepositLimit() {
-		
 		return depositLimit;
 	}
 	
