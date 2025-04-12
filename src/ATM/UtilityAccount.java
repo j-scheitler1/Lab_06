@@ -107,6 +107,9 @@ public class UtilityAccount {
 	    }
 
 	    // RETURN LAST 3
+	    for (Payment p : payments) {
+	    	displayPayment(p);
+	    }
 	    int size = payments.size();
 	    return payments.subList(Math.max(0, size - 3), size);
 	}
