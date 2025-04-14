@@ -10,7 +10,7 @@ public class Main {
 		System.out.print("Password: ");
 		String password = scanner.next();
 
-		ATM atm = new ATM(scanner, username, password);
-		atm.start();
+		//ATM atm = new ATM(scanner, username, password);
+		//atm.start();
 	}
 }
