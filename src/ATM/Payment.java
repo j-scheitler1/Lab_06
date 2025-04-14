@@ -10,10 +10,10 @@ public class Payment {
 	private double due;
 	private String dueDate;
 	
-	public Payment (double paid, double due, String data) {
+	public Payment (double paid, double due, String date) {
 		this.paid = paid;
 		this.due = due;
-		this.dueDate = data;
+		this.dueDate = date;
 	}
 	
 	public double getPaidAmount () {

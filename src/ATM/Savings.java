@@ -11,8 +11,8 @@ import java.util.List;
 public class Savings extends Account{
 	
 	protected double transferLimit;
-	protected double depositLimit;
-	protected double withdrawLimit;
+	//protected double depositLimit;
+	//protected double withdrawLimit;
 	
 	private List<Payment> paymentHistory;
 	
@@ -50,5 +50,6 @@ public class Savings extends Account{
 		this.depositLimit = depositLimit;
 		this.transferLimit = transferLimit;
 	}
+
 
 }
