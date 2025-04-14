@@ -1,6 +1,8 @@
 package ATM;
 
 import java.util.List;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 //Authors: Joshua Scheitler, Ethan Mayer
 
@@ -36,6 +38,7 @@ public class ATM {
 		
 		password = scanIn;
 		
+		// TODO - User will login here to the ATM but needs another login with Utility Company
 		User user = new User(username, password);
 		Checkings checkingsAccount = user.getCheckings();
 		Savings savingsAccount = user.getSavings();
@@ -115,7 +118,24 @@ public class ATM {
 					}
 				}
 				if(choice ==  4) {
-					//Pay bill
+					// TODO - get bill pay to work
+					Scanner bills = new Scanner(System.in);
+					System.out.println("Below is your next bill, ");
+					System.out.println("Due date: " + utilityAccount.getNextBillDueDate());
+					System.out.println("Amount Due: " + utilityAccount.getNextBillPayment());
+					System.out.println("please enter how much you would like to pay towards it: ");
+					int amount = bills.nextInt();
+					
+					// TODO - add validation for bill pay instance
+	
+					Payment p = new Payment(amount, utilityAccount.getNextBillPayment(), utilityAccount.getNextBillDueDate());
+					int accountNumber = utilityAccount.getAccountNumber();
+					utilityAccount.savePayment(accountNumber, p);
+					
+					// TODO - add transfer from checkings account
+					
+					System.out.println("Successfully Paid Bill");
+					
 				}
 				if(choice ==  5) {
 					//Check balance
@@ -180,6 +200,7 @@ public class ATM {
 				for (int i = 0; i < 50; ++i) System.out.println();
 				
 				System.out.println("Welcome to your utility account " + username + "!");
+				// TODO - THINK WE NEED LOGIN HERE OR SUM
 				System.out.println("Options: Input 1, 2 or 3");
 				System.out.println("1: View payment history, 2: View next bill, 3: Back");
 				
@@ -191,10 +212,15 @@ public class ATM {
 					
 					paymentHistory = utilityAccount.getPaymentHistory();
 					
-					System.out.println("Payment history: ");
+					System.out.print("Payment history: ");
 					
-					for(int i=0; i<paymentHistory.size(); i++) {
-						System.out.println(paymentHistory.get(i));
+					if (paymentHistory.size() == 0) {
+						System.out.println("No payment history at this time, make a payment to see it!");
+					} else {
+						for (Payment p : paymentHistory) {
+							System.out.println("");
+							utilityAccount.displayPayment(p);
+						}
 					}
 				}
 				if(choice ==  2) {

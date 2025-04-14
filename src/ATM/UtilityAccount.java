@@ -30,7 +30,7 @@ public class UtilityAccount {
 		this.password = password;
 		accountNumber = rand.nextInt();
 		paymentHistory = new ArrayList<Payment>();
-		//saveUser();
+		saveUser();
 	}
 	
 	public void saveUser() {
@@ -93,7 +93,7 @@ public class UtilityAccount {
 	                    String[] details = cleaned.split("\\|");
 	                    if (details.length == 3) {
 	                        try {
-	                            Date date = Date.valueOf(details[0]);
+	                            String date = details[0];
 	                            int paid = Integer.parseInt(details[1]);
 	                            int due = Integer.parseInt(details[2]);
 	                            payments.add(new Payment(paid, due, date));
@@ -109,10 +109,6 @@ public class UtilityAccount {
 	        System.out.println("Error reading payment history: " + e.getMessage());
 	    }
 
-	    // RETURN LAST 3
-	    for (Payment p : payments) {
-	    	displayPayment(p);
-	    }
 	    int size = payments.size();
 	    return payments.subList(Math.max(0, size - 3), size);
 	}
@@ -122,6 +118,8 @@ public class UtilityAccount {
 	    File inputFile = new File("payment_history.txt");
 	    File tempFile = new File("temp_payment_history.txt");
 	    String actNum = String.valueOf(accountNumber);
+	    	
+	    System.out.println("Account number: " + actNum);
 
 	    try (
 	        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -130,10 +128,12 @@ public class UtilityAccount {
 	        String line;
 	        while ((line = reader.readLine()) != null) {
 	            String[] parts = line.split(",", 2);
+	            System.out.println("Matching with: " + parts[0]);
 	            if (parts[0].equals(actNum)) {
 	                String existingPayments = parts.length > 1 ? parts[1] : "";
 	                String updatedLine = actNum + "," + existingPayments + paymentFormat(payment);
 	                writer.write(updatedLine);
+	                System.out.println(updatedLine);
 	            } else {
 	                writer.write(line);
 	            }
@@ -172,14 +172,13 @@ public class UtilityAccount {
 		return sb.toString();
 	}
 	
-	
+
 	public double getNextBillPayment() {
 		return 100.0;
 	}
 	public String getNextBillDueDate() {
 		return "July 4th";
 	}
-
 	public int getAccountNumber() {
 		return accountNumber;
 	}

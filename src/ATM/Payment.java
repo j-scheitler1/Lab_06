@@ -6,25 +6,25 @@ import java.sql.Date;
 
 public class Payment {
 	
-	private int paid;
-	private int due;
-	private Date dueDate;
+	private double paid;
+	private double due;
+	private String dueDate;
 	
-	public Payment (int paid, int due, Date data) {
+	public Payment (double paid, double due, String data) {
 		this.paid = paid;
 		this.due = due;
 		this.dueDate = data;
 	}
 	
-	public int getPaidAmount () {
+	public double getPaidAmount () {
 		return paid;
 	}
 	
-	public int getDueAmount () {
+	public double getDueAmount () {
 		return due;
 	}
 	
-	public Date getdueDate() {
+	public String getdueDate() {
 		return dueDate;
 	}
 }
