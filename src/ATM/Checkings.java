@@ -8,16 +8,16 @@ import java.util.List;
 
 public class Checkings extends Account{
 	
-	protected int withdrawlTotal;
-	protected int transferTotal;
+	protected double withdrawlLimit;
+	protected double depositLimit;
 	
 	private List<Payment> paymentHistory;
 	
-	public Checkings () {
-		super();
-		withdrawlTotal = 0;
-		transferTotal = 0;
-		
+	public Checkings (double depositLimit, double withdrawLimit) {
+
+		super(depositLimit, withdrawLimit);
+
+
 	}
 	
 //	public void withdrawlFunds(int amount) {
@@ -26,10 +26,10 @@ public class Checkings extends Account{
 //		balance -= amount;
 //	}
 	
-	public boolean canWithdrawl(int amount) {
-		if (withdrawlTotal + amount > 500 ) return false;
-		return true;
-	}
+//	public boolean canWithdrawl(int amount) {
+//		if (withdrawlTotal + amount > 500 ) return false;
+//		return true;
+//	}
 
 //	public boolean transferFunds(int amount) {
 //		if(isOverDraft(amount)) return false;

@@ -30,7 +30,7 @@ public class UtilityAccount {
 		this.password = password;
 		accountNumber = rand.nextInt();
 		paymentHistory = new ArrayList<Payment>();
-		saveUser();
+		//saveUser();
 	}
 	
 	public void saveUser() {

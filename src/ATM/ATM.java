@@ -41,17 +41,25 @@ public class ATM {
 		Savings savingsAccount = user.getSavings();
 		UtilityAccount utilityAccount = user.getUtility();
 		
-		while(true) {
+		boolean exit = true;
+		
+		while(exit) {
 			
 			System.out.println("Which account would you like to access? Input 1, 2, or 3.");
 	
 			System.out.println("1: Checkings, 2: Savings, 3: Utility");
 			
+			System.out.println("To advance to the next day: 0");
+			
+			System.out.println("To exit ATM: 9");
+			
 			int choice = scanner.nextInt();
 			
 			
 			if(choice ==  1) {
-				//Checkings
+				//Checking
+				for (int i = 0; i < 50; ++i) System.out.println();
+				
 				System.out.println("Welcome to your checking account " + username + "!");
 				System.out.println("Options: Input 1, 2, 3, 4, 5 or 6");
 				System.out.println("1: Deposit, 2: Withdraw, 3: Transfer, 4: Pay bill, 5: Check balance, 6: Back");
@@ -115,11 +123,14 @@ public class ATM {
 				}
 				if(choice ==  6) {
 					//Back
+					for (int i = 0; i < 50; ++i) System.out.println();
 				}
 				
 			}
 			else if(choice ==  2) {
 				//Savings
+				for (int i = 0; i < 50; ++i) System.out.println();
+				
 				System.out.println("Welcome to your savings account " + username + "!");
 				System.out.println("Options: Input 1, 2, 3 or 4");
 				System.out.println("1: Deposit, 2: Transfer, 3: Check balance, 4: Back");
@@ -161,10 +172,13 @@ public class ATM {
 				}
 				if(choice ==  4) {
 					//Back
+					for (int i = 0; i < 50; ++i) System.out.println();
 				}
 			}
 			else if(choice ==  3) {
 				//Utility
+				for (int i = 0; i < 50; ++i) System.out.println();
+				
 				System.out.println("Welcome to your utility account " + username + "!");
 				System.out.println("Options: Input 1, 2 or 3");
 				System.out.println("1: View payment history, 2: View next bill, 3: Back");
@@ -190,9 +204,27 @@ public class ATM {
 				}
 				if(choice ==  3) {
 					//Back
+					for (int i = 0; i < 50; ++i) System.out.println();
 				}
 				
 				
+			}
+			else if(choice ==  0) {
+				//Advance to next day, reset daily limits.
+				for (int i = 0; i < 50; ++i) System.out.println();
+				System.out.println("Advancing to the next day");
+				checkingsAccount.resetDailyLimits(5000.0, 500.0);
+				savingsAccount.resetDailyLimits(5000.0,  100.0);
+			}
+			else if(choice ==  9) {
+				exit = false;
+
+				for (int i = 0; i < 50; ++i) System.out.println();
+				
+				System.out.println("See you later!");
+				
+
+
 			}
 		}
 		

@@ -14,8 +14,8 @@ public class User {
 	
 	public User(String username, String password) {
 		
-		this.checkingsAccount = new Checkings();
-		this.savingsAccount = new Savings();
+		this.checkingsAccount = new Checkings(5000.0, 500.0);
+		this.savingsAccount = new Savings(5000.0,  0);
 		this.utilityAccount = new UtilityAccount(username, password);
 	}
 	
