@@ -28,15 +28,18 @@ public class UtilityAccount {
 	public static UtilityAccount createOrLogin (String username, String accountNum, String password) {
 		if (login(username, accountNum, password)) {
 			System.out.println("Logging in!");
-			return new UtilityAccount(username, accountNum, password);
-		} 
+			UtilityAccount ua = new UtilityAccount(username, accountNum, password);
+			setAccountNumber(username, accountNum, password, ua);
+			return ua;
+		}
+		System.out.println("Creating Account!");
 		return new UtilityAccount(username, password);
 	}
 	
 	public UtilityAccount (String username, String accountNum, String password) {
 		this.username = username;
-		this.accountNumber = Integer.parseInt(accountNum);
 		this.password = password;
+		this.accountNumber = getAccountNumber();
 		this.paymentHistory = getPaymentHistory();
 	}
 	
@@ -76,7 +79,7 @@ public class UtilityAccount {
 					currUsername = parts[0];
 					currPassword = parts[1];
 					currAccountNumber = parts[2];
-					if ((username.equals(currUsername) || String.valueOf(accountNumber) == currAccountNumber) && password.equals(password)) {
+					if ((username.equals(currUsername) || String.valueOf(accountNumber).equals(currAccountNumber)) && password.equals(currPassword)) {
 						return true;
 					}
 				}
@@ -193,5 +196,27 @@ public class UtilityAccount {
 	}
 	public int getAccountNumber() {
 		return accountNumber;
+	}
+	
+	public static void setAccountNumber(String username, String accountNumber, String password, UtilityAccount ua) {
+		try (BufferedReader reader = new BufferedReader(new FileReader("utility_users.txt"))) {
+			String line;
+			String currUsername;
+			String currPassword;
+			String currAccountNumber;
+			while ((line = reader.readLine()) != null) {
+				String[] parts = line.split(",");
+				if (parts.length == 3) {
+					currUsername = parts[0];
+					currPassword = parts[1];
+					currAccountNumber = parts[2];
+					if ((username.equals(currUsername) || String.valueOf(accountNumber).equals(currAccountNumber)) && password.equals(currPassword)) {
+						ua.accountNumber = Integer.parseInt(currAccountNumber);
+					}
+				}
+			}
+		} catch(IOException e) {
+			System.out.println("Could not find user: " + e.getMessage());
+		}
 	}
 }

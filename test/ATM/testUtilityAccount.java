@@ -37,8 +37,16 @@ public class testUtilityAccount {
 	}
 	
 	@Test
-	public void testLogin() {
-		
+	public void testCorrectUserNameLogin() {
+		boolean attemptLogin = utilityAccount.login("Josh", "0", "S");
+		assertEquals(attemptLogin, true);
+	}
+	
+	@Test
+	public void testNumberLogin() {
+		String num = Integer.toString(utilityAccount.getAccountNumber());
+		boolean attemptLogin = utilityAccount.login("", num, "S");
+		assertEquals(attemptLogin, true);
 	}
 	
 	@Test

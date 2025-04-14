@@ -42,19 +42,20 @@ public class ATM {
 			System.out.println("Please input your username: ");
 			scanIn = scanner.next();
 			username = scanIn;			
+			System.out.println("Please input your password to log in: ");
+			scanIn = scanner.next();
+			password = scanIn;
 			user = new User(username, password);
 		} 
 		else if (scanLogin == 2) {
 			System.out.println("Please input your account number: ");
 			scanIn = scanner.next();
 			accountNum = scanIn;			
+			System.out.println("Please input your password to log in: ");
+			scanIn = scanner.next();
+			password = scanIn;
 			user = new User(null, accountNum, password);
 		}
-				
-
-		System.out.println("Please input your password to log in: ");
-		scanIn = scanner.next();
-		password = scanIn;
 		
 		Checkings checkingsAccount = user.getCheckings();
 		Savings savingsAccount = user.getSavings();
