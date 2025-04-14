@@ -24,11 +24,14 @@ public class UtilityAccount {
 	protected List<Payment> paymentHistory;
 	Random rand = new Random();
 	
+//	public UtilityAccount createOrLogin (String username, String password) {
+//		
+//	}
 	
 	public UtilityAccount (String username, String password) {
 		this.username = username;
 		this.password = password;
-		accountNumber = rand.nextInt();
+		accountNumber = rand.nextInt(1_000_000) + 1;
 		paymentHistory = new ArrayList<Payment>();
 		saveUser();
 	}
@@ -94,8 +97,8 @@ public class UtilityAccount {
 	                    if (details.length == 3) {
 	                        try {
 	                            String date = details[0];
-	                            int paid = Integer.parseInt(details[1]);
-	                            int due = Integer.parseInt(details[2]);
+	                            double paid = Double.parseDouble(details[1]);
+	                            double due = Double.parseDouble(details[2]);
 	                            payments.add(new Payment(paid, due, date));
 	                        } catch (IllegalArgumentException e) {
 	                            System.out.println("Skipping malformed payment entry: " + entry);
@@ -163,13 +166,13 @@ public class UtilityAccount {
 	}
 	
 	
-	public String displayPayment (Payment paymentHistory) {
+	public void displayPayment (Payment paymentHistory) {
 		StringBuilder sb = new StringBuilder();
 			sb.append("Due Date: ").append(paymentHistory.getdueDate()).append("\n");
 			sb.append("Paid Amount: ").append(paymentHistory.getPaidAmount()).append("\n");
 			sb.append("Due Amount: ").append(paymentHistory.getDueAmount()).append("\n");
 			sb.append("\n");
-		return sb.toString();
+		System.out.println(sb.toString());
 	}
 	
 
