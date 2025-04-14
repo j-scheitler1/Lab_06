@@ -31,20 +31,31 @@ public class ATM {
 		Scanner scanner = new Scanner(System.in);
 		String username = "none";
 		String password = "none";
+		String accountNum = "";
+		User user = null;
 		
-		System.out.println("Hello, welcome to the ATM! Please input your username: ");
-		String scanIn = scanner.next();
-		username = scanIn;
+		System.out.println("Hello, welcome to the ATM! Please input 1 to login with username or 2 to login with account number ");
+		int scanLogin = scanner.nextInt();
+		String scanIn;
+		
+		if (scanLogin == 1) {
+			System.out.println("Please input your username: ");
+			scanIn = scanner.next();
+			username = scanIn;			
+			user = new User(username, password);
+		} 
+		else if (scanLogin == 2) {
+			System.out.println("Please input your account number: ");
+			scanIn = scanner.next();
+			accountNum = scanIn;			
+			user = new User(null, accountNum, password);
+		}
 				
 
 		System.out.println("Please input your password to log in: ");
-		
 		scanIn = scanner.next();
 		password = scanIn;
 		
-		
-		// TODO - User will login here to the ATM but needs another login with Utility Company
-		User user = new User(username, password);
 		Checkings checkingsAccount = user.getCheckings();
 		Savings savingsAccount = user.getSavings();
 		UtilityAccount utilityAccount = user.getUtility();
@@ -210,7 +221,6 @@ public class ATM {
 				for (int i = 0; i < 50; ++i) System.out.println();
 				
 				System.out.println("Welcome to Utility Company Incorporated! ");
-				// TODO - THINK WE NEED LOGIN HERE OR SUM
 				System.out.println("Options: Input 1, 2 or 3");
 				System.out.println("1: View payment history, 2: View next bill, 3: Back");
 				
@@ -219,7 +229,6 @@ public class ATM {
 				if(choice ==  1) {
 					//Payment history
 					List<Payment> paymentHistory;
-					
 					paymentHistory = utilityAccount.getPaymentHistory();
 					
 					System.out.print("Payment history: ");

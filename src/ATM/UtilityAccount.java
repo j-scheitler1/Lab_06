@@ -3,6 +3,7 @@ package ATM;
 // Authors: Joshua Scheitler, Ethan Mayer
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Random;
 import java.io.BufferedReader;
@@ -24,9 +25,20 @@ public class UtilityAccount {
 	protected List<Payment> paymentHistory;
 	Random rand = new Random();
 	
-//	public UtilityAccount createOrLogin (String username, String password) {
-//		
-//	}
+	public static UtilityAccount createOrLogin (String username, String accountNum, String password) {
+		if (login(username, accountNum, password)) {
+			System.out.println("Logging in!");
+			return new UtilityAccount(username, accountNum, password);
+		} 
+		return new UtilityAccount(username, password);
+	}
+	
+	public UtilityAccount (String username, String accountNum, String password) {
+		this.username = username;
+		this.accountNumber = Integer.parseInt(accountNum);
+		this.password = password;
+		this.paymentHistory = getPaymentHistory();
+	}
 	
 	public UtilityAccount (String username, String password) {
 		this.username = username;
@@ -52,7 +64,7 @@ public class UtilityAccount {
 	    }
 	}
 	
-	public void login(String username, int accountNumber, String password) {
+	public static boolean login(String username, String accountNumber, String password) {
 		try (BufferedReader reader = new BufferedReader(new FileReader("utility_users.txt"))) {
 			String line;
 			String currUsername;
@@ -64,10 +76,8 @@ public class UtilityAccount {
 					currUsername = parts[0];
 					currPassword = parts[1];
 					currAccountNumber = parts[2];
-					if ((username == currUsername || String.valueOf(accountNumber) == currAccountNumber)&& password == currPassword) {
-						this.username = username;
-						this.password = password;
-						this.paymentHistory = getPaymentHistory();
+					if ((username.equals(currUsername) || String.valueOf(accountNumber) == currAccountNumber) && password.equals(password)) {
+						return true;
 					}
 				}
 			}
@@ -75,6 +85,7 @@ public class UtilityAccount {
 		} catch(IOException e) {
 			System.out.println("Could not find user: " + e.getMessage());
 		}
+		return false;
 	}
 	
 	public List<Payment> getPaymentHistory() {
@@ -131,12 +142,10 @@ public class UtilityAccount {
 	        String line;
 	        while ((line = reader.readLine()) != null) {
 	            String[] parts = line.split(",", 2);
-	            System.out.println("Matching with: " + parts[0]);
 	            if (parts[0].equals(actNum)) {
 	                String existingPayments = parts.length > 1 ? parts[1] : "";
 	                String updatedLine = actNum + "," + existingPayments + paymentFormat(payment);
 	                writer.write(updatedLine);
-	                System.out.println(updatedLine);
 	            } else {
 	                writer.write(line);
 	            }
@@ -175,7 +184,7 @@ public class UtilityAccount {
 		System.out.println(sb.toString());
 	}
 	
-
+	
 	public double getNextBillPayment() {
 		return 100.0;
 	}
