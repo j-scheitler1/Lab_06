@@ -133,6 +133,33 @@ public class testAccount {
  		assertEquals(expectedSavings, false);
  		
  	}
+ 	
+ 	@Test
+ 	public void testAccountDepositNegative() {
+ 		boolean expectedChecking = checkingsAccount.deposit(-500.0);
+ 		boolean expectedSavings = savingsAccount.deposit(-500.0);
+ 		
+ 		assertEquals(false, expectedChecking);
+ 		assertEquals(false, expectedSavings);
+ 	}
+ 	
+ 	@Test
+ 	public void testAccountWithdrawNegative() {
+ 		boolean expectedChecking = checkingsAccount.withdraw(-500.0);
+ 		boolean expectedSavings = savingsAccount.withdraw(-500.0);
+ 		
+ 		assertEquals(false, expectedChecking);
+ 		assertEquals(false, expectedSavings);
+ 	}
+ 	
+ 	@Test
+ 	public void testAccountTransferNegative() {
+ 		boolean expectedChecking = checkingsAccount.transfer(-500.0, checkingsAccount, savingsAccount);
+ 		boolean expectedSavings = savingsAccount.transfer(-500.0, savingsAccount, checkingsAccount);
+ 		
+ 		assertEquals(false, expectedChecking);
+ 		assertEquals(false, expectedSavings);
+ 	}
 	
 	@Test
 	public void testAccountGetTransferLimit() {

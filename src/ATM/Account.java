@@ -17,8 +17,8 @@ public abstract class Account {
 	
 	public boolean deposit(double amount) {
 		
-		if(amount > depositLimit) {
-			//too big of a deposit, over daily limit!
+		if(amount > depositLimit || amount < 0) {
+			//too big of a deposit, over daily limit! or negative
 			return false;
 		}
 		else {
@@ -32,8 +32,8 @@ public abstract class Account {
 	
 	public boolean withdraw(double amount) {
 		
-		if(amount > balance || amount > withdrawLimit) {
-			//overdraft or over withdraw limit. Not successful.
+		if(amount > balance || amount > withdrawLimit || amount < 0) {
+			//overdraft or over withdraw limit or negative. Not successful.
 			return false;
 		}
 		else {
@@ -47,8 +47,8 @@ public abstract class Account {
 
 	public boolean transfer(double amount, Account account1, Account account2) {
 		
-		if(amount > balance) {
-			//no overdrafts allowed.
+		if(amount > balance || amount < 0) {
+			//no overdrafts allowed. no negative amounts
 			return false;
 		}
 		else {

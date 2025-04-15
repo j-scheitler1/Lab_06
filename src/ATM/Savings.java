@@ -29,7 +29,7 @@ public class Savings extends Account{
 	
 	@Override
 	public boolean transfer(double amount, Account account1, Account account2) {
-		if(amount > balance || amount > transferLimit) {
+		if(amount > balance || amount > transferLimit || amount < 0) {
 			return false;
 		}
 		else {
