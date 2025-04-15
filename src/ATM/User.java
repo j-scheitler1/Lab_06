@@ -10,7 +10,7 @@ public class User {
 	
 	private Savings savingsAccount;
 	
-	private UtilityAccount utilityAccount;
+	protected UtilityAccount utilityAccount;
 	
 	public User(String username, String password) {
 		this.checkingsAccount = new Checkings(5000.0, 500.0);

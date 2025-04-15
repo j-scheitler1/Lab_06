@@ -27,4 +27,9 @@ public class Payment {
 	public String getdueDate() {
 		return dueDate;
 	}
+	
+	@Override
+	public String toString() {
+	    return "!" + dueDate + "|" + paid + "|" + due + "?";
+	}
 }

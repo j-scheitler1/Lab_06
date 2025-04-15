@@ -23,6 +23,7 @@ public class UtilityAccount {
 	protected String password;
 	protected int accountNumber;
 	protected List<Payment> paymentHistory;
+	protected Payment nextPayment;
 	Random rand = new Random();
 	
 	public static UtilityAccount createOrLogin (String username, String accountNum, String password) {
@@ -131,12 +132,12 @@ public class UtilityAccount {
 	}
 	
 	// PAYMENTS FILE STRUCTURE = AccountNumber,?Date|PaidAmount|DueAmount!, ...
-	public void savePayment(int accountNumber, Payment payment) {
+	public Boolean savePayment(int accountNumber, Payment payment) {
 	    File inputFile = new File("payment_history.txt");
 	    File tempFile = new File("temp_payment_history.txt");
 	    String actNum = String.valueOf(accountNumber);
-	    	
-	    System.out.println("Account number: " + actNum);
+
+	    boolean found = false; // Track if the account number was found
 
 	    try (
 	        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -145,10 +146,13 @@ public class UtilityAccount {
 	        String line;
 	        while ((line = reader.readLine()) != null) {
 	            String[] parts = line.split(",", 2);
+	            System.out.println("GIVEN: " + actNum);
+	            System.out.println("COMPARING WITH: " + parts[0]);
 	            if (parts[0].equals(actNum)) {
 	                String existingPayments = parts.length > 1 ? parts[1] : "";
 	                String updatedLine = actNum + "," + existingPayments + paymentFormat(payment);
 	                writer.write(updatedLine);
+	                found = true;
 	            } else {
 	                writer.write(line);
 	            }
@@ -156,17 +160,28 @@ public class UtilityAccount {
 	        }
 	    } catch (IOException e) {
 	        System.out.println("Error updating payment history: " + e.getMessage());
-	        return;
+	        return false;
+	    }
+
+	    if (!found) {
+	        System.out.println("No matching account found. No payment saved.");
+	        tempFile.delete(); // clean up the temp file
+	        return false;
 	    }
 
 	    if (inputFile.delete()) {
 	        if (!tempFile.renameTo(inputFile)) {
 	            System.out.println("Error: Could not rename temp file.");
+	            return false;
 	        }
 	    } else {
 	        System.out.println("Error: Could not delete original payment history file.");
+	        return false;
 	    }
+
+	    return true;
 	}
+
 	
 	public String paymentFormat(Payment payment) {
 		StringBuilder sb = new StringBuilder();
@@ -178,15 +193,20 @@ public class UtilityAccount {
 	}
 	
 	
-	public void displayPayment (Payment paymentHistory) {
+	public String displayPayment (Payment paymentHistory) {
 		StringBuilder sb = new StringBuilder();
 			sb.append("Due Date: ").append(paymentHistory.getdueDate()).append("\n");
 			sb.append("Paid Amount: ").append(paymentHistory.getPaidAmount()).append("\n");
 			sb.append("Due Amount: ").append(paymentHistory.getDueAmount()).append("\n");
 			sb.append("\n");
 		System.out.println(sb.toString());
+		
+		return sb.toString();
 	}
 	
+	public Payment getNextPayment() {
+		return nextPayment;
+	}
 	
 	public double getNextBillPayment() {
 		return 100.0;
