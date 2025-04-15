@@ -19,9 +19,15 @@ public class Payment {
 	public double getPaidAmount () {
 		return paid;
 	}
+	public void setPaidAmount (double paid) {
+		this.paid = paid;
+	}
 	
 	public double getDueAmount () {
 		return due;
+	}
+	public void setDueAmount (double due) {
+		this.due = due;
 	}
 	
 	public String getdueDate() {
