@@ -77,7 +77,61 @@ public class testAccount {
 		assertEquals(550.0, savingsAccount.getBalance(), DELTA);
 		
 	}
+
+	@Test
+	public void testAccountDepositInvalid() {
+		
+		boolean expectedChecking = checkingsAccount.deposit(50000.0);
+		boolean expectedSavings = savingsAccount.deposit(50000.0);
+		
+
+		assertEquals(0.0, checkingsAccount.getBalance(), DELTA);
+		
+		assertEquals(0.0, savingsAccount.getBalance(), DELTA);
+		
+		assertEquals(expectedChecking, false);
+		assertEquals(expectedSavings, false);
+	}
 	
+	@Test
+	public void testAccountWithdrawInvalid() {
+		
+		checkingsAccount.deposit(500.0);
+		
+		boolean expectedChecking = checkingsAccount.withdraw(600.0);
+		
+		assertEquals(500.0, checkingsAccount.getBalance(), DELTA);
+
+		assertEquals(expectedChecking, false);
+	}
+	
+	@Test
+	public void testAccountTransferInvalid() {
+		
+		checkingsAccount.deposit(500.0);
+		savingsAccount.deposit(500.0);
+		
+		//test overdraft transfer to savings
+		boolean expectedChecking = checkingsAccount.transfer(600.0, checkingsAccount, savingsAccount);
+		
+		assertEquals(500.0, checkingsAccount.getBalance(), DELTA);
+		assertEquals(500.0, savingsAccount.getBalance(), DELTA);
+		
+		//test overdraft transfer to checkings
+		boolean expectedSavings = savingsAccount.transfer(600.0, savingsAccount, checkingsAccount);
+		
+		assertEquals(500.0, checkingsAccount.getBalance(), DELTA);
+		assertEquals(500.0, savingsAccount.getBalance(), DELTA);
+		
+		//both transfers were invalid
+		assertEquals(expectedChecking, false);
+		assertEquals(expectedSavings, false);
+		
+		//test over transfer limit
+		expectedSavings = savingsAccount.transfer(120.0, savingsAccount, checkingsAccount);
+		assertEquals(expectedSavings, false);
+		
+	}
 	@Test
 	public void testAccountGetTransferLimit() {
 		

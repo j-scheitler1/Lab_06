@@ -95,6 +95,12 @@ public class testUtilityAccount {
 		List<Payment> payment = new ArrayList<Payment>();
 		payment = utilityAccount.getPaymentHistory();
 		
+		
+		//TODO fix
+		//!July 4, 2025|0.0|100.0?
+		//!July 4th|50.0|100.0?
+		System.out.println(payment.get(0).toString());
+		System.out.println(expected);
 		assertEquals(payment.get(0).toString(), expected);
 	}
 	

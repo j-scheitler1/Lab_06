@@ -24,7 +24,7 @@ public class Payment {
 		return due;
 	}
 	
-	public String getdueDate() {
+	public String getDueDate() {
 		return dueDate;
 	}
 	

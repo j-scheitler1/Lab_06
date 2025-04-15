@@ -185,7 +185,7 @@ public class UtilityAccount {
 	
 	public String paymentFormat(Payment payment) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("!").append(payment.getdueDate())
+		sb.append("!").append(payment.getDueDate())
 			.append("|").append(payment.getPaidAmount())
 			.append("|").append(payment.getDueAmount())
 			.append("?");
@@ -195,7 +195,7 @@ public class UtilityAccount {
 	
 	public String displayPayment (Payment paymentHistory) {
 		StringBuilder sb = new StringBuilder();
-			sb.append("Due Date: ").append(paymentHistory.getdueDate()).append("\n");
+			sb.append("Due Date: ").append(paymentHistory.getDueDate()).append("\n");
 			sb.append("Paid Amount: ").append(paymentHistory.getPaidAmount()).append("\n");
 			sb.append("Due Amount: ").append(paymentHistory.getDueAmount()).append("\n");
 			sb.append("\n");
