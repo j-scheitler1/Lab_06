@@ -135,7 +135,6 @@ public class ATM {
 					}
 				}
 				if(choice ==  4) {
-					// TODO - get bill pay to work
 					Scanner bills = new Scanner(System.in);
 					System.out.println("Please enter how much you would like to pay towards it: ");
 					double amount = bills.nextDouble();
@@ -151,11 +150,9 @@ public class ATM {
 						}
 					}
 					else {
-						// TODO - Change this
-						System.out.println("Successfully withdrew $" + amount);
 						System.out.println("You have $" + checkingsAccount.getWithdrawLimit() + " daily withdraw limit remaining!");
 						int accountNumber = utilityAccount.getAccountNumber();
-						utilityAccount.savePayment(accountNumber, 50);
+						utilityAccount.savePayment(accountNumber, amount);
 						System.out.println("Utility Company Says 'Thanks for your money chump!'");
 					}	
 				}
@@ -228,7 +225,7 @@ public class ATM {
 				choice = scanner.nextInt();
 				
 				if(choice ==  1) {
-					//Payment history
+				
 					List<Payment> paymentHistory;
 					paymentHistory = utilityAccount.getPaymentHistory();
 					
@@ -239,7 +236,7 @@ public class ATM {
 					} else {
 						for (Payment p : paymentHistory) {
 							System.out.println("");
-							utilityAccount.displayPayment(p);
+							System.out.print(utilityAccount.displayPayment(p));
 						}
 					}
 				}

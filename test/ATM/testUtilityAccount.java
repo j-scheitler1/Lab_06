@@ -23,7 +23,6 @@ public class testUtilityAccount {
 
 	@Test
 	public void testSaveUser() {
-		// Currently no assertions – could verify user saved to file if needed
 	}
 
 	@Test
@@ -88,8 +87,8 @@ public class testUtilityAccount {
 	@Test
 	public void testDisplayPayment() {
 		String expected = "Due Date: July 4th\n" +
-						  "Paid Amount: 50.0\n" +
-						  "Due Amount: 50.0\n";
+						  "Paid Amount: $50.00\n" +
+						  "Due Amount: $50.00\n";
 
 		utilityAccount.nextPayment = new Payment(0, 100, "July 4th");
 		utilityAccount.savePayment(utilityAccount.getAccountNumber(), 50);

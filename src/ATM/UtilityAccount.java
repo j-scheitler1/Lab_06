@@ -78,7 +78,7 @@ public class UtilityAccount {
     public List<Payment> getPaymentHistory() {
         List<Payment> payments = new ArrayList<>();
         String actNum = String.valueOf(getAccountNumber());
-
+        
         try (BufferedReader reader = new BufferedReader(new FileReader("payment_history.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -125,9 +125,9 @@ public class UtilityAccount {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",", 2);
                 if (parts[0].equals(actNum)) {
-                    updatePayment(amount);
+                    Payment updated = updatePayment(amount); 
                     String existing = parts.length > 1 ? parts[1] : "";
-                    writer.write(actNum + "," + existing + paymentFormat(nextPayment));
+                    writer.write(actNum + "," + existing + paymentFormat(updated));
                     found = true;
                 } else {
                     writer.write(line);
@@ -153,16 +153,19 @@ public class UtilityAccount {
         return true;
     }
 
-    private void updatePayment(double amount) {
+    private Payment updatePayment(double amount) {
         double paid = nextPayment.getPaidAmount() + amount;
         double remaining = nextPayment.getDueAmount() - amount;
 
-        nextPayment.setPaidAmount(paid);
-        nextPayment.setDueAmount(Math.max(0, remaining));
+        Payment updatedPayment = new Payment(paid, Math.max(0, remaining), nextPayment.getDueDate());
 
         if (remaining <= 0) {
             setNextPayment();
+        } else {
+            nextPayment = updatedPayment; 
         }
+
+        return updatedPayment;
     }
 
     public String paymentFormat(Payment payment) {
@@ -171,8 +174,8 @@ public class UtilityAccount {
 
     public String displayPayment(Payment payment) {
         return "Due Date: " + payment.getDueDate() + "\n" +
-               "Paid Amount: " + payment.getPaidAmount() + "\n" +
-               "Due Amount: " + payment.getDueAmount() + "\n";
+               "Paid Amount: $" + String.format("%.2f", payment.getPaidAmount()) + "\n" +
+               "Due Amount: $" + String.format("%.2f", payment.getDueAmount()) + "\n";
     }
 
     public Payment getNextPayment() {
