@@ -25,12 +25,12 @@ public class testPayment {
 	@Test
 	public void testGetDueAmount () {
 
-		assertEquals(100.0, payment.getPaidAmount(), DELTA);
+		assertEquals(100.0, payment.getDueAmount(), DELTA);
 	}
 	
 	@Test
-	public void testGetdueDate() {
+	public void testGetDueDate() {
 
-		assertEquals("July 3rd", payment.getPaidAmount());
+		assertEquals("July 3rd", payment.getDueDate());
 	}
 }
