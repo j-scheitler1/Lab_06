@@ -151,11 +151,11 @@ public class ATM {
 						}
 					}
 					else {
+						// TODO - Change this
 						System.out.println("Successfully withdrew $" + amount);
 						System.out.println("You have $" + checkingsAccount.getWithdrawLimit() + " daily withdraw limit remaining!");
-						Payment p = new Payment(amount, utilityAccount.getNextBillPayment(), utilityAccount.getNextBillDueDate());
 						int accountNumber = utilityAccount.getAccountNumber();
-						utilityAccount.savePayment(accountNumber, p);
+						utilityAccount.savePayment(accountNumber, 50);
 						System.out.println("Utility Company Says 'Thanks for your money chump!'");
 					}	
 				}
