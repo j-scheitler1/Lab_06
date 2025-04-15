@@ -166,11 +166,11 @@ public class UtilityAccount {
     }
 
     public String paymentFormat(Payment payment) {
-        return "!" + payment.getdueDate() + "|" + payment.getPaidAmount() + "|" + payment.getDueAmount() + "?";
+        return "!" + payment.getDueDate() + "|" + payment.getPaidAmount() + "|" + payment.getDueAmount() + "?";
     }
 
     public String displayPayment(Payment payment) {
-        return "Due Date: " + payment.getdueDate() + "\n" +
+        return "Due Date: " + payment.getDueDate() + "\n" +
                "Paid Amount: " + payment.getPaidAmount() + "\n" +
                "Due Amount: " + payment.getDueAmount() + "\n";
     }
@@ -190,7 +190,7 @@ public class UtilityAccount {
     }
 
     public String getNextBillDueDate() {
-        return nextPayment.getdueDate();
+        return nextPayment.getDueDate();
     }
 
     public int getAccountNumber() {
@@ -221,4 +221,3 @@ public class UtilityAccount {
         return startDate.plusDays(randomDays).format(DateTimeFormatter.ofPattern("MMMM d yyyy"));
     }
 }
-
