@@ -250,4 +250,32 @@ public class testAccount {
 		
 		assertEquals(500.0, savingsAccount.getBalance(), DELTA);
 	}
+	
+	@Test
+	public void testAccountSetBalance() {
+		
+		checkingsAccount.setBalance(1000.0);
+		savingsAccount.setBalance(1000.0);
+		
+		assertEquals(1000.0, checkingsAccount.getBalance(), DELTA);
+		assertEquals(1000.0, savingsAccount.getBalance(), DELTA);
+		
+		checkingsAccount.setBalance(10000.0);
+		savingsAccount.setBalance(10000.0);
+
+		assertEquals(10000.0, checkingsAccount.getBalance(), DELTA);
+		assertEquals(10000.0, savingsAccount.getBalance(), DELTA);
+	}
+	
+	@Test
+	public void testAccountSetBalanceInvalid() {
+		
+		boolean expectedChecking = checkingsAccount.setBalance(-1000.0);
+		boolean expectedSavings = savingsAccount.setBalance(-1000.0);
+		
+		assertEquals(0.0, checkingsAccount.getBalance(), DELTA);
+		assertEquals(0.0, savingsAccount.getBalance(), DELTA);
+		assertEquals(false, expectedChecking);
+		assertEquals(false, expectedSavings);
+	}
 }

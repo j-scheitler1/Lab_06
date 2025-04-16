@@ -66,8 +66,15 @@ public abstract class Account {
 		return depositLimit;
 	}
 	
-	public void setBalance(double balance) {
+	public boolean setBalance(double balance) {
+		
+		if(balance < 0) {
+			//cant have negative balance
+			return false;
+		}
+		
 		this.balance = balance;
+		return true;
 	}
 	public double getBalance() {
 		return balance;

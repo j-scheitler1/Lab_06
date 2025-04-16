@@ -3,6 +3,13 @@ package ATM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,4 +45,18 @@ public class testUser {
 		
 		assertNotEquals(null, utilityAccount);
 	}
+	
+	@Test
+    public void testSaveAccounts() {
+		boolean expectedUser = user.saveAccounts("none");
+		
+		assertEquals(true, expectedUser);
+    }
+
+	@Test
+    public void testLoadAccounts() {
+		boolean expectedUser = user.loadAccounts("none");
+		
+		assertEquals(true, expectedUser);
+    }
 }

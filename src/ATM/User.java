@@ -43,7 +43,7 @@ public class User {
         return utilityAccount;
     }
 
-    public void saveAccounts(String username) {
+    public boolean saveAccounts(String username) {
         File inputFile = new File("bank_accounts.txt");
         File tempFile = new File("temp_bank_accounts.txt");
         boolean updated = false;
@@ -80,11 +80,14 @@ public class User {
 
         } catch (IOException e) {
             System.out.println("Error saving accounts: " + e.getMessage());
+            return false;
         }
 
         if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
             System.out.println("Error replacing bank_accounts.txt");
+            return false;
         }
+        return true;
     }
 
     public boolean loadAccounts(String username) {
