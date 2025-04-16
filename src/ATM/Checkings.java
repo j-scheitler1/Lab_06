@@ -14,10 +14,8 @@ public class Checkings extends Account{
 	private List<Payment> paymentHistory;
 	
 	public Checkings (double depositLimit, double withdrawLimit) {
-
 		super(depositLimit, withdrawLimit);
-
-
+		
 	}
 	
 //	public void withdrawlFunds(int amount) {

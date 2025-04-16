@@ -24,7 +24,7 @@ public class UtilityAccount {
             setAccountNumber(username, accountNum, password, ua);
             return ua;
         }
-        System.out.println("Creating Account!");
+        System.out.println("Creating Utility Account!");
         return new UtilityAccount(username, password);
     }
 

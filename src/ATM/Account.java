@@ -66,6 +66,9 @@ public abstract class Account {
 		return depositLimit;
 	}
 	
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
 	public double getBalance() {
 		return balance;
 	}
