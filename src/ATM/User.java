@@ -42,13 +42,10 @@ public class User {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 6 && parts[0].equals(username)) {
+                if (parts.length >= 3 && parts[0].equals(username)) {
                     writer.write(username + "," +
                             checkingsAccount.getBalance() + "," +
-                            checkingsAccount.getWithdrawLimit() + "," +
-                            savingsAccount.getBalance() + "," +
-                            savingsAccount.getDepositLimit() + "," +
-                            savingsAccount.getWithdrawLimit());
+                            savingsAccount.getBalance());
                     updated = true;
                 } else {
                     writer.write(line);
@@ -59,10 +56,7 @@ public class User {
             if (!updated) {
                 writer.write(username + "," +
                         checkingsAccount.getBalance() + "," +
-                        checkingsAccount.getWithdrawLimit() + "," +
-                        savingsAccount.getBalance() + "," +
-                        savingsAccount.getDepositLimit() + "," +
-                        savingsAccount.getWithdrawLimit());
+                        savingsAccount.getBalance());
                 writer.newLine();
             }
 
@@ -83,17 +77,14 @@ public class User {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 6 && parts[0].equals(username)) {
+                if (parts.length >= 3 && parts[0].equals(username)) {
                     double checkBal = Double.parseDouble(parts[1]);
-                    double checkLimit = Double.parseDouble(parts[2]);
-                    double saveBal = Double.parseDouble(parts[3]);
-                    double saveDepositLimit = Double.parseDouble(parts[4]);
-                    double saveWithdrawLimit = Double.parseDouble(parts[5]);
+                    double saveBal = Double.parseDouble(parts[2]);
 
-                    this.checkingsAccount = new Checkings(checkLimit, checkLimit);
+                    this.checkingsAccount = new Checkings(5000.0, 500.0);
                     this.checkingsAccount.setBalance(checkBal);
 
-                    this.savingsAccount = new Savings(saveDepositLimit, saveWithdrawLimit);
+                    this.savingsAccount = new Savings(5000.0, 100.0);
                     this.savingsAccount.setBalance(saveBal);
                     return true;
                 }
