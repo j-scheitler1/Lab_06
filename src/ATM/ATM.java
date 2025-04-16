@@ -230,7 +230,7 @@ public class ATM {
                 }
 
                 if (choice == 2) {
-                    System.out.println("Next bill payment: $" + utilityAccount.getNextBillPayment());
+                	System.out.println("Next bill payment: $" + String.format("%.2f", utilityAccount.getNextBillPayment()));
                     System.out.println("Due date: " + utilityAccount.getNextBillDueDate());
                 }
             }

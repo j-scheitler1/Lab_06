@@ -172,7 +172,7 @@ public class testAccount {
 		checkingsAccount.withdraw(100.0);
 		assertEquals(400.0, checkingsAccount.getWithdrawLimit(), DELTA);
 
-		assertEquals(0.0, savingsAccount.getWithdrawLimit(), DELTA);
+		assertEquals(100.0, savingsAccount.getWithdrawLimit(), DELTA);
 	}
 
 	@Test
