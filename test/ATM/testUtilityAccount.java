@@ -1,9 +1,7 @@
 package ATM;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -12,64 +10,57 @@ import org.junit.Test;
 
 public class testUtilityAccount {
 
-	private User user;
-	public UtilityAccount utilityAccount;
+	private UtilityAccount utilityAccount;
+	private String username;
+	private String password;
 
 	@Before
 	public void initialize() {
-		this.user = new User("Josh", "S");
-		this.utilityAccount = user.getUtility();
-	}
-
-	@Test
-	public void testSaveUser() {
+		username = generateRandomString(8);
+		password = generateRandomString(10);
+		utilityAccount = UtilityAccount.createOrLogin(username, "0", password);
 	}
 
 	@Test
 	public void testCorrectUserNameLogin() {
-		boolean attemptLogin = utilityAccount.login("Josh", "0", "S");
-		assertEquals(true, attemptLogin);
+		boolean login = UtilityAccount.login(username, "0", password); // pass 0 for accountNumber when using username
+		assertTrue(login);
 	}
 
 	@Test
 	public void testAccountNumberLogin() {
-		String num = Integer.toString(utilityAccount.getAccountNumber());
-		boolean attemptLogin = utilityAccount.login("", num, "S");
-		assertEquals(true, attemptLogin);
+		String accountNum = Integer.toString(utilityAccount.getAccountNumber());
+		boolean login = UtilityAccount.login("", accountNum, password); // pass null for username when using account number
+		assertTrue(login);
 	}
 
 	@Test
 	public void testWrongLogin() {
-		boolean wrongNum = utilityAccount.login("", "99999", "S");
-		boolean wrongUsername = utilityAccount.login("Josh", "", "WRONG PASSWORD");
-		assertEquals(false, wrongNum);
-		assertEquals(false, wrongUsername);
+		boolean wrongNumber = UtilityAccount.login("", "999999", password); // non-existent account number
+		boolean wrongPassword = UtilityAccount.login(username, "0", "incorrect");
+		assertFalse(wrongNumber);
+		assertFalse(wrongPassword);
 	}
 
 	@Test
 	public void testGetPaymentHistory() {
-		String userName = generateRandomString(8); 
-		String passWord = generateRandomString(12); 
-		User newUser = new User(userName, passWord);
-		UtilityAccount newUA = newUser.utilityAccount;
-
-		List<Payment> payments = newUA.getPaymentHistory();
+		List<Payment> payments = utilityAccount.getPaymentHistory();
 		assertEquals(0, payments.size());
 
-		newUA.nextPayment = new Payment(0, 100, "July 3, 2025");
-		newUA.savePayment(newUA.getAccountNumber(), 50);
-		payments = newUA.getPaymentHistory();
+		utilityAccount.nextPayment = new Payment(0, 100, "July 3, 2025");
+		utilityAccount.savePayment(utilityAccount.getAccountNumber(), 50);
+		payments = utilityAccount.getPaymentHistory();
 
 		assertEquals(1, payments.size());
 	}
 
 	@Test
 	public void testSavePayment() {
-		boolean saved = utilityAccount.savePayment(utilityAccount.getAccountNumber(), 50.0);
-		assertEquals(true, saved);
+		boolean success = utilityAccount.savePayment(utilityAccount.getAccountNumber(), 50.0);
+		assertTrue(success);
 
-		boolean invalidSave = utilityAccount.savePayment(500000000, 50.0);
-		assertEquals(false, invalidSave);
+		boolean fail = utilityAccount.savePayment(123456789, 50.0); // invalid account
+		assertFalse(fail);
 	}
 
 	@Test
@@ -78,9 +69,9 @@ public class testUtilityAccount {
 		utilityAccount.nextPayment = new Payment(0, 100, "July 4th");
 
 		utilityAccount.savePayment(utilityAccount.getAccountNumber(), 50);
-		List<Payment> payments = utilityAccount.getPaymentHistory();
+		List<Payment> history = utilityAccount.getPaymentHistory();
 
-		String actual = payments.get(payments.size() - 1).toString();
+		String actual = history.get(history.size() - 1).toString();
 		assertEquals(expected, actual);
 	}
 
@@ -101,24 +92,24 @@ public class testUtilityAccount {
 
 	@Test
 	public void testGetNextBillPayment() {
-		String notExpected = "Due Date: July 4th\n" +
-							 "Paid Amount: 50.0\n" +
-							 "Due Amount: 50.0\n";
-
 		utilityAccount.nextPayment = new Payment(0, 100, "July 4th");
-		utilityAccount.savePayment(utilityAccount.getAccountNumber(), 500);
+		utilityAccount.savePayment(utilityAccount.getAccountNumber(), 50);
 
 		Payment p = utilityAccount.getNextPayment();
 		String actual = utilityAccount.displayPayment(p);
 
-		assertNotEquals(notExpected, actual);
+		String incorrect = "Due Date: July 4th\n" +
+						   "Paid Amount: 50.0\n" +
+						   "Due Amount: 50.0\n";
+
+		assertNotEquals(incorrect, actual);
 	}
 
 	@Test
 	public void testGetAccountNumber() {
 		String expected = Integer.toString(utilityAccount.getAccountNumber());
 		String actual = Integer.toString(utilityAccount.getAccountNumber());
-		assertEquals(expected, actual); // redundant but confirms getter works
+		assertEquals(expected, actual);
 	}
 
 	public static String generateRandomString(int length) {

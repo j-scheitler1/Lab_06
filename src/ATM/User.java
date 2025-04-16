@@ -6,9 +6,9 @@ public class User {
 
     private Checkings checkingsAccount;
     private Savings savingsAccount;
-    protected UtilityAccount utilityAccount;
+    public UtilityAccount utilityAccount;
 
-    public User(String username, String password) {
+    public User(String username) {
         if (!loadAccounts(username)) {
             this.checkingsAccount = new Checkings(5000.0, 500.0);
             this.savingsAccount = new Savings(5000.0, 0);
@@ -16,19 +16,7 @@ public class User {
             this.savingsAccount.setBalance(0.0);
             saveAccounts(username);
         }
-        this.utilityAccount = UtilityAccount.createOrLogin(username, "0", password);
-    }
-
-    public User(String username, String accountNumber, String password) {
-        String nameToUse = (username != null) ? username : accountNumber;
-        if (!loadAccounts(nameToUse)) {
-            this.checkingsAccount = new Checkings(5000.0, 500.0);
-            this.savingsAccount = new Savings(5000.0, 0);
-            this.checkingsAccount.setBalance(0.0);
-            this.savingsAccount.setBalance(0.0);
-            saveAccounts(nameToUse);
-        }
-        this.utilityAccount = UtilityAccount.createOrLogin(nameToUse, accountNumber, password);
+        this.utilityAccount = null; // Lazy-loaded via login
     }
 
     public Checkings getCheckings() {
@@ -114,5 +102,31 @@ public class User {
             System.out.println("Error loading accounts: " + e.getMessage());
         }
         return false;
+    }
+
+    public static boolean savePinMapping(String pin, String username) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("pin_map.txt", true))) {
+            writer.write(pin + "," + username);
+            writer.newLine();
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error saving pin: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static String getUsernameFromPin(String pin) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("pin_map.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2 && parts[0].equals(pin)) {
+                    return parts[1];
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading pin_map.txt: " + e.getMessage());
+        }
+        return null;
     }
 }
