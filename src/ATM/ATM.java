@@ -1,5 +1,6 @@
 package ATM;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,17 +13,65 @@ public class ATM {
 
         // === PIN LOGIN ===
         System.out.println("Welcome to the ATM! Please input your 4-digit PIN:");
-        String pin = scanner.next();
-
+        String pin = "0000";
+        boolean exit = true;
+        
+        try {
+        	pin = scanner.next();
+        }
+        catch(InputMismatchException e){
+        	System.out.println("Invalid input. Please enter a string.");
+        	scanner.nextLine();
+        	try {
+        		pin = scanner.next();
+        	}
+        	catch(InputMismatchException g) {
+        		scanner.nextLine();
+        		pin = "0000";
+        		exit = false;
+        	}
+        }
+        
         String username = User.getUsernameFromPin(pin);
 
         if (username == null) {
             System.out.println("PIN not recognized. Let's create a new account.");
             System.out.print("Please enter a username to register: ");
-            username = scanner.next();
-
+            
+            try {
+            	username = scanner.next();
+            }
+            catch(InputMismatchException e) {
+            	System.out.println("Invalid input. Please enter a string.");
+            	scanner.nextLine();
+            	try {
+            		username = scanner.next();
+            	}
+            	catch(InputMismatchException g) {
+            		scanner.nextLine();
+            		username = "none";
+            		exit = false;
+            	}
+            }
+            
             System.out.print("Please choose a new 4-digit PIN: ");
-            String newPin = scanner.next();
+            String newPin = "0000";
+            
+            try {
+            	newPin = scanner.next();
+            }
+            catch(InputMismatchException e) {
+            	System.out.println("Invalid input. Please enter a string.");
+            	scanner.nextLine();
+            	try {
+            		newPin = scanner.next();
+            	}
+            	catch(InputMismatchException g) {
+            		scanner.nextLine();
+            		newPin = "0000";
+            		exit = false;
+            	}
+            }
 
             if (User.savePinMapping(newPin, username)) {
             	utilUsername = username;
@@ -41,8 +90,10 @@ public class ATM {
         Checkings checkingsAccount = user.getCheckings();
         Savings savingsAccount = user.getSavings();
         UtilityAccount utilityAccount = null;
+        
+        int choice = 99;
 
-        boolean exit = true;
+        
 
         while (exit) {
             System.out.println("\nWhich account would you like to access? Input 1, 2, or 3.");
@@ -50,16 +101,59 @@ public class ATM {
             System.out.println("To advance to the next day: 0");
             System.out.println("To exit ATM: 9");
 
-            int choice = scanner.nextInt();
+            try {
+            	choice = scanner.nextInt();
+            }
+            catch (InputMismatchException e){
+            	System.out.println("Invalid input. Please enter an integer.");
+            	scanner.nextLine();
+            	try {
+            		choice = scanner.nextInt();
+            	}
+            	catch(InputMismatchException g) {
+            		scanner.nextLine();
+            		choice = 9;
+            	}
+            }
 
             if (choice == 1) {
                 System.out.println("Welcome to your checking account " + username + "!");
                 System.out.println("Options: 1: Deposit, 2: Withdraw, 3: Transfer, 4: Pay bill, 5: Check balance, 6: Back");
-                choice = scanner.nextInt();
+                try {
+                	choice = scanner.nextInt();
+                }
+                catch (InputMismatchException e){
+                	System.out.println("Invalid input. Please enter an integer.");
+                	scanner.nextLine();
+                	try {
+                		choice = scanner.nextInt();
+                	}
+                	catch(InputMismatchException g) {
+                		scanner.nextLine();
+                		choice = 6;
+                	}
+                }
 
                 if (choice == 1) {
                     System.out.println("How much would you like to deposit?");
-                    double amount = scanner.nextDouble();
+                    
+                    double amount = -1;
+                    
+                    try{
+                    	amount = scanner.nextDouble();
+                    }
+                    catch(InputMismatchException e) {
+                    	System.out.println("Invalid input. Please enter a double.");
+                    	scanner.nextLine();
+                    	try {
+                    		amount = scanner.nextDouble();
+                    	}
+                    	catch(InputMismatchException g) {
+                    		scanner.nextLine();
+                    		amount = -1;
+                    	}
+                    }
+                    
 
                     if (!checkingsAccount.deposit(amount)) {
                         System.out.println("Failure to deposit. You have only $" + checkingsAccount.getDepositLimit() + " daily deposit limit remaining!");
@@ -72,7 +166,22 @@ public class ATM {
 
                 if (choice == 2) {
                     System.out.println("How much would you like to withdraw?");
-                    double amount = scanner.nextDouble();
+                    double amount = -1;
+                    
+                    try{
+                    	amount = scanner.nextDouble();
+                    }
+                    catch(InputMismatchException e) {
+                    	System.out.println("Invalid input. Please enter a double.");
+                    	scanner.nextLine();
+                    	try {
+                    		amount = scanner.nextDouble();
+                    	}
+                    	catch(InputMismatchException g) {
+                    		scanner.nextLine();
+                    		amount = -1;
+                    	}
+                    }
 
                     if (!checkingsAccount.withdraw(amount)) {
                         System.out.println("Failure to withdraw.");
@@ -90,7 +199,22 @@ public class ATM {
 
                 if (choice == 3) {
                     System.out.println("How much would you like to transfer?");
-                    double amount = scanner.nextDouble();
+                    double amount = -1;
+                    
+                    try{
+                    	amount = scanner.nextDouble();
+                    }
+                    catch(InputMismatchException e) {
+                    	System.out.println("Invalid input. Please enter a double.");
+                    	scanner.nextLine();
+                    	try {
+                    		amount = scanner.nextDouble();
+                    	}
+                    	catch(InputMismatchException g) {
+                    		scanner.nextLine();
+                    		amount = -1;
+                    	}
+                    }
 
                     if (checkingsAccount.transfer(amount, checkingsAccount, savingsAccount)) {
                         System.out.println("Transferred $" + amount + " to savings");
@@ -102,7 +226,22 @@ public class ATM {
 
                 if (choice == 4) {
                     System.out.println("Please enter how much you would like to pay:");
-                    double amount = scanner.nextDouble();
+                    double amount = -1;
+                    
+                    try{
+                    	amount = scanner.nextDouble();
+                    }
+                    catch(InputMismatchException e) {
+                    	System.out.println("Invalid input. Please enter a double.");
+                    	scanner.nextLine();
+                    	try {
+                    		amount = scanner.nextDouble();
+                    	}
+                    	catch(InputMismatchException g) {
+                    		scanner.nextLine();
+                    		amount = -1;
+                    	}
+                    }
 
                     if (!checkingsAccount.withdraw(amount)) {
                         System.out.println("Failure to Pay");
@@ -115,13 +254,55 @@ public class ATM {
                         if (utilityAccount == null) {
                             System.out.println("Please login to your Utility Account.");
                             System.out.print("Enter username (or blank to use account number): ");
-                            String utilUsername = scanner.next();
+                            String utilUsername = "none";
+                            try{
+                            	utilUsername = scanner.next();
+                            }
+                            catch(InputMismatchException e) {
+                            	System.out.println("Invalid input. Please enter a string.");
+                            	scanner.nextLine();
+                            	try {
+                            		utilUsername = scanner.next();
+                            	}
+                            	catch(InputMismatchException g) {
+                            		scanner.nextLine();
+                            		utilUsername = "none";
+                            	}
+                            }
 
                             System.out.print("Enter account number (or blank if using username): ");
-                            String utilAccountNum = scanner.next();
+                            String utilAccountNum = "none";
+                            try{
+                            	utilAccountNum = scanner.next();
+                            }
+                            catch(InputMismatchException e) {
+                            	System.out.println("Invalid input. Please enter a string.");
+                            	scanner.nextLine();
+                            	try {
+                            		utilAccountNum = scanner.next();
+                            	}
+                            	catch(InputMismatchException g) {
+                            		scanner.nextLine();
+                            		utilAccountNum = "none";
+                            	}
+                            }
 
                             System.out.print("Enter password: ");
-                            String utilPassword = scanner.next();
+                            String utilPassword = "none";
+                            try{
+                            	utilPassword = scanner.next();
+                            }
+                            catch(InputMismatchException e) {
+                            	System.out.println("Invalid input. Please enter a string.");
+                            	scanner.nextLine();
+                            	try {
+                            		utilPassword = scanner.next();
+                            	}
+                            	catch(InputMismatchException g) {
+                            		scanner.nextLine();
+                            		utilPassword = "none";
+                            	}
+                            }
 
                             utilityAccount = UtilityAccount.createOrLogin(
                                 utilUsername.isEmpty() ? null : utilUsername,
@@ -151,11 +332,39 @@ public class ATM {
             else if (choice == 2) {
                 System.out.println("Welcome to your savings account " + username + "!");
                 System.out.println("Options: 1: Deposit, 2: Transfer, 3: Check balance, 4: Back");
-                choice = scanner.nextInt();
+                try {
+                	choice = scanner.nextInt();
+                }
+                catch (InputMismatchException e){
+                	System.out.println("Invalid input. Please enter an integer.");
+                	scanner.nextLine();
+                	try {
+                		choice = scanner.nextInt();
+                	}
+                	catch(InputMismatchException g) {
+                		scanner.nextLine();
+                		choice = 4;
+                	}
+                }
 
                 if (choice == 1) {
                     System.out.println("How much would you like to deposit?");
-                    double amount = scanner.nextDouble();
+                    double amount = -1;
+                    
+                    try{
+                    	amount = scanner.nextDouble();
+                    }
+                    catch(InputMismatchException e) {
+                    	System.out.println("Invalid input. Please enter a double.");
+                    	scanner.nextLine();
+                    	try {
+                    		amount = scanner.nextDouble();
+                    	}
+                    	catch(InputMismatchException g) {
+                    		scanner.nextLine();
+                    		amount = -1;
+                    	}
+                    }
 
                     if (!savingsAccount.deposit(amount)) {
                         System.out.println("Failure to deposit. You have only $" + savingsAccount.getDepositLimit() + " daily deposit limit remaining!");
@@ -168,7 +377,22 @@ public class ATM {
 
                 if (choice == 2) {
                     System.out.println("How much would you like to transfer to checking?");
-                    double amount = scanner.nextDouble();
+                    double amount = -1;
+                    
+                    try{
+                    	amount = scanner.nextDouble();
+                    }
+                    catch(InputMismatchException e) {
+                    	System.out.println("Invalid input. Please enter a double.");
+                    	scanner.nextLine();
+                    	try {
+                    		amount = scanner.nextDouble();
+                    	}
+                    	catch(InputMismatchException g) {
+                    		scanner.nextLine();
+                    		amount = -1;
+                    	}
+                    }
 
                     if (savingsAccount.transfer(amount, savingsAccount, checkingsAccount)) {
                         System.out.println("Transferred $" + amount + " to checking");
@@ -190,13 +414,55 @@ public class ATM {
 
                 	System.out.print("Enter username (Same as ATM username or blank to use account number): ");
                 	scanner.nextLine();
-                	String utilUsername = scanner.nextLine().trim();
+                	String utilUsername = "none";
+                    try{
+                    	utilUsername = scanner.nextLine().trim();
+                    }
+                    catch(InputMismatchException e) {
+                    	System.out.println("Invalid input. Please enter a string.");
+                    	scanner.nextLine();
+                    	try {
+                    		utilUsername = scanner.nextLine();
+                    	}
+                    	catch(InputMismatchException g) {
+                    		scanner.nextLine();
+                    		exit = false;
+                    	}
+                    }
 
                 	System.out.print("Enter Account number (or blank if using username): ");
-                	String utilAccountNum = scanner.nextLine().trim();
+                	String utilAccountNum = "none";
+                    try{
+                    	utilAccountNum = scanner.nextLine().trim();
+                    }
+                    catch(InputMismatchException e) {
+                    	System.out.println("Invalid input. Please enter a string.");
+                    	scanner.nextLine();
+                    	try {
+                    		utilAccountNum = scanner.nextLine().trim();
+                    	}
+                    	catch(InputMismatchException g) {
+                    		scanner.nextLine();
+                    		exit = false;
+                    	}
+                    }
 
                 	System.out.print("Enter password: ");
-                	String utilPassword = scanner.next();
+                	String utilPassword = "none";
+                    try{
+                    	utilPassword = scanner.next();
+                    }
+                    catch(InputMismatchException e) {
+                    	System.out.println("Invalid input. Please enter a string.");
+                    	scanner.nextLine();
+                    	try {
+                    		utilPassword = scanner.next();
+                    	}
+                    	catch(InputMismatchException g) {
+                    		scanner.nextLine();
+                    		exit = false;
+                    	}
+                    }
 
                     utilityAccount = UtilityAccount.createOrLogin(
                         utilUsername.isEmpty() ? "" : utilUsername,
@@ -216,7 +482,20 @@ public class ATM {
 
                 System.out.println("Welcome to Utility Company Incorporated! Customer: " + utilityAccount.getAccountNumber());
                 System.out.println("Options: 1: View payment history, 2: View next bill, 3: Back");
-                choice = scanner.nextInt();
+                try {
+                	choice = scanner.nextInt();
+                }
+                catch (InputMismatchException e){
+                	System.out.println("Invalid input. Please enter an integer.");
+                	scanner.nextLine();
+                	try {
+                		choice = scanner.nextInt();
+                	}                    	
+            		catch(InputMismatchException g) {
+            			scanner.nextLine();
+            			choice = 3;
+            		}
+                }
 
                 if (choice == 1) {
                     List<Payment> history = utilityAccount.getPaymentHistory();
