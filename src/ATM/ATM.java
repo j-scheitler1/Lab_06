@@ -4,6 +4,9 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+//Authors: Joshua Scheitler, Ethan Mayer
+
+
 public class ATM {
 	
 	public static String utilUsername;

@@ -2,6 +2,9 @@ package ATM;
 
 import java.util.Scanner;
 
+//Authors: Joshua Scheitler, Ethan Mayer
+
+
 public class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);

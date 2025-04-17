@@ -1,5 +1,7 @@
 package ATM;
 
+//Authors: Joshua Scheitler, Ethan Mayer
+
 public class Payment {
     private double paidAmount;
     private double dueAmount;
