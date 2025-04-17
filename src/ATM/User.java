@@ -2,6 +2,9 @@ package ATM;
 
 import java.io.*;
 
+//Authors: Joshua Scheitler, Ethan Mayer
+
+
 public class User {
 
     private Checkings checkingsAccount;
